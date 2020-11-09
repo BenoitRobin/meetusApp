@@ -23,9 +23,6 @@
 
 <script>
   import Button from "../components/UI/Button.svelte";
-  import meetups from "../meetups-store.js";
-  import { onDestroy, createEventDispatcher } from "svelte";
-
   export let loadedMeetup;
 </script>
 

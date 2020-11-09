@@ -3,7 +3,6 @@
   import Button from "./../UI/Button.svelte";
   import Badge from "./../UI/Badge.svelte";
   import { createEventDispatcher } from "svelte";
-  import Loading from "../UI/LoadingSpinner.svelte";
 
   export let id;
   export let title;
@@ -117,7 +116,6 @@
       Edit
     </Button>
     {#if isLoading}
-      <!-- <Loading /> -->
       <span>Changing...</span>
     {:else}
       <Button
