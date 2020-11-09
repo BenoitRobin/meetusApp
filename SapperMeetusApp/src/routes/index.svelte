@@ -16,7 +16,7 @@
           });
         }
 
-        return { fetchedMeetups: loadedMeetups };
+        return { fetchedMeetups: loadedMeetups.reverse() };
         // setTimeout(() => {
         //   isLoading = false;
         //   meetups.setMeetup(loadedMeetups.reverse());
@@ -148,8 +148,7 @@
           email={meetUp.contactEmail}
           address={meetUp.address}
           isFav={meetUp.isFavorite}
-          on:showDetails
-          on:edit />
+          on:edit={startEdit} />
       </div>
     {/each}
   </section>
