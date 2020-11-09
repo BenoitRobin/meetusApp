@@ -43,18 +43,33 @@
   import meetups from "../meetups-store";
 
   export let fetchedMeetups;
+
+  let loadedMeetups = [];
   let editMode;
   let editedId;
   let isLoading;
+  let unsubscribe;
 
   const dispatch = createEventDispatcher();
 
   let favsOnly = false;
 
   $: filterMeetups = favsOnly
-    ? fetchedMeetups.filter((m) => m.isFavorite)
-    : fetchedMeetups;
+    ? loadedMeetups.filter((m) => m.isFavorite)
+    : loadedMeetups;
 
+  onMount(() => {
+    unsubscribe = meetups.subscribe((items) => {
+      loadedMeetups = items;
+    });
+    meetups.setMeetup(fetchedMeetups);
+  });
+
+  onDestroy(() => {
+    if (unsubscribe) {
+      unsubscribe();
+    }
+  });
   function setFilter(event) {
     favsOnly = event.detail === 1;
   }
@@ -72,6 +87,10 @@
   function startEdit(event) {
     editMode = "edit";
     editedId = event.detail;
+  }
+
+  function startAdd() {
+    editMode = "edit";
   }
 </script>
 
@@ -111,7 +130,7 @@
 {:else}
   <section id="meetup-controls">
     <MeetupFilter on:select={setFilter} />
-    <Button on:click={() => dispatch('add')}>New Meetup</Button>
+    <Button on:click={startAdd}>New Meetup</Button>
   </section>
   {#if filterMeetups.length === 0}
     <p id="no-meetup">No meetup found, you can start adding some.</p>
