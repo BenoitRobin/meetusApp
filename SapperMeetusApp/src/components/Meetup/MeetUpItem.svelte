@@ -11,7 +11,7 @@
   export let imageUrl;
   export let description;
   export let address;
-  export let email;
+  // export let email;
   export let isFav;
 
   let isLoading = false;
@@ -128,8 +128,6 @@
         {isFav ? 'Unfavorite' : 'Favorite'}
       </Button>
     {/if}
-    <Button type="button" on:click={() => dispatch('showDetails', id)}>
-      Show details
-    </Button>
+    <Button href="/{id}">Show details</Button>
   </footer>
 </article>
